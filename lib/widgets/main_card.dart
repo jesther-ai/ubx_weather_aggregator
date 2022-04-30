@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ubx_weather_aggregator/utilities/hex_color.dart';
+import 'package:ubx_weather_aggregator/widgets/clouds_section.dart';
+import 'package:ubx_weather_aggregator/widgets/label_card_info.dart';
 import 'package:ubx_weather_aggregator/widgets/temperature_card.dart';
 
 class MainCard extends StatelessWidget {
@@ -21,60 +23,42 @@ class MainCard extends StatelessWidget {
         color: HexColor('#ffdbc2'),
         borderRadius: BorderRadius.circular(12.0),
       ),
-      height: 300,
+      // height: 300,
       width: double.infinity,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
         children: [
-          const TemparatureSign(temp: '18°C'),
-          const SizedBox(width: 10),
-          const Clouds(code: '04d', description: 'Broken Clouds'),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              TemparatureSign(temp: '18°C'),
+              SizedBox(width: 10),
+              Clouds(code: '04d', description: 'Broken Clouds'),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              LabelCardInfo(label: 'Min Temp', value: '18°C'),
+              LabelCardInfo(label: 'Max Temp', value: '34°C'),
+              LabelCardInfo(label: 'Feels', value: '34°C'),
+              LabelCardInfo(label: 'Pressure', value: '1008'),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              LabelCardInfo(label: 'Wind Speed', value: '3.6km'),
+              LabelCardInfo(label: 'Wind Deg', value: '130°'),
+              LabelCardInfo(label: 'Humidt', value: '62%'),
+              LabelCardInfo(label: 'Visibility', value: '10000'),
+            ],
+          ),
         ],
       ),
-    );
-  }
-}
-
-class Clouds extends StatelessWidget {
-  const Clouds({
-    required this.description,
-    required this.code,
-    Key? key,
-  }) : super(key: key);
-  final String description;
-  final String code;
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        FadeInImage.assetNetwork(
-          fadeInCurve: Curves.easeInQuart,
-          fadeOutCurve: Curves.easeInQuart,
-          fadeOutDuration: const Duration(milliseconds: 1000),
-          fadeInDuration: const Duration(milliseconds: 200),
-          fit: BoxFit.cover,
-          placeholderFit: BoxFit.cover,
-          placeholderCacheHeight: 20,
-          placeholderCacheWidth: 20,
-          height: 65,
-          width: 70,
-          placeholder: 'assets/images/loading.gif',
-          image: 'https://openweathermap.org/img/wn/' + code + '@2x.png',
-        ),
-        Text(
-          description,
-          style: const TextStyle(
-            fontFamily: 'Roboto',
-            fontWeight: FontWeight.w600,
-            fontStyle: FontStyle.normal,
-            fontSize: 15,
-            color: Colors.black,
-          ),
-        ),
-      ],
     );
   }
 }

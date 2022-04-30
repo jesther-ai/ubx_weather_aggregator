@@ -16,8 +16,8 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: HexColor('#f46f20'),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
+        elevation: 5,
+        backgroundColor: HexColor('#f46f20'),
         leadingWidth: 80,
         leading: Padding(padding: const EdgeInsets.only(left: 20), child: Image.asset('assets/images/ubxLogo.png')),
         title: Text(
@@ -33,9 +33,8 @@ class HomeScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.only(left: 20, right: 20),
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
           children: [
-            const SizedBox(height: 20),
             InputTextField(
               controller: searchField,
               hintText: 'Pampanga Philippines',
@@ -58,8 +57,9 @@ class HomeScreen extends StatelessWidget {
               onChanged: (string) {},
             ),
             const SizedBox(height: 20),
-            const LocationCard(location: 'Macabebe Pampanga'),
+            const LocationCard(location: 'Macabebe Pampanga', withLocation: true),
             const MainCard(),
+            const LocationCard(location: 'Other City', withLocation: false),
           ],
         ),
       ),

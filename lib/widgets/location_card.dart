@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 class LocationCard extends StatelessWidget {
   const LocationCard({
     required this.location,
+    required this.withLocation,
     Key? key,
   }) : super(key: key);
   final String location;
+  final bool withLocation;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -22,7 +24,7 @@ class LocationCard extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 5),
-        const Icon(Icons.location_on_outlined, color: Colors.white)
+        withLocation ? const Icon(Icons.location_on_outlined, color: Colors.white) : const SizedBox()
       ],
     );
   }
