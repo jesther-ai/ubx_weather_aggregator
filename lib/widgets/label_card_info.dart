@@ -8,7 +8,7 @@ class LabelCardInfo extends StatelessWidget {
     Key? key,
   }) : super(key: key);
   final String label;
-  final num value;
+  final num? value;
   final String? unit;
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class LabelCardInfo extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Text(
-            value.toStringAsFixed(1) + (unit ?? ''),
+            value != null ? (value!.toStringAsFixed(1) + (unit ?? '')) : '--',
             style: const TextStyle(
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w800,

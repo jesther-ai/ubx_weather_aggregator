@@ -37,7 +37,7 @@ class MainCard extends StatelessWidget {
               children: [
                 TemparatureSign(temp: value.data['main']['temp']),
                 const SizedBox(width: 5),
-                Clouds(code: value.data['weather'][0]['icon'], description: value.data['weather'][0]['main']),
+                Clouds(code: value.data['weather'][0]['icon'], description: value.data['weather'][0]['description']),
               ],
             ),
             const SizedBox(height: 15),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ubx_weather_aggregator/provider/cities_card_provider.dart';
 import 'package:ubx_weather_aggregator/provider/main_card_provider.dart';
 import 'package:ubx_weather_aggregator/provider/refresh_limit.dart';
 import 'package:ubx_weather_aggregator/utilities/dismiss_keyboard.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider<RefreshLimit>(create: (context) => RefreshLimit()),
           ChangeNotifierProvider<MainCardProvider>(create: (context) => MainCardProvider()),
+          ChangeNotifierProvider<CitiesProvider>(create: (context) => CitiesProvider()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

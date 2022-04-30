@@ -29,7 +29,7 @@ class Clouds extends StatelessWidget {
           image: 'https://openweathermap.org/img/wn/' + code + '@2x.png',
         ),
         Text(
-          description,
+          description.capitalized(),
           style: const TextStyle(
             fontFamily: 'Roboto',
             fontWeight: FontWeight.w600,
@@ -41,4 +41,8 @@ class Clouds extends StatelessWidget {
       ],
     );
   }
+}
+
+extension Capitalized on String {
+  String capitalized() => this.substring(0, 1).toUpperCase() + this.substring(1).toLowerCase();
 }

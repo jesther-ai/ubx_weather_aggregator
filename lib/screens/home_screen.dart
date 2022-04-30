@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
+import 'package:ubx_weather_aggregator/provider/cities_card_provider.dart';
 import 'package:ubx_weather_aggregator/provider/main_card_provider.dart';
 import 'package:ubx_weather_aggregator/provider/refresh_limit.dart';
 import 'package:ubx_weather_aggregator/utilities/hex_color.dart';
@@ -41,7 +42,7 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-          child: Consumer<MainCardProvider>(builder: (context, value, child) {
+          child: Consumer2<MainCardProvider, CitiesProvider>(builder: (context, value, value1, child) {
             return RefreshIndicator(
               color: Colors.white,
               backgroundColor: HexColor('#f46f20'),
@@ -117,25 +118,39 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 220,
-                    color: Colors.transparent,
-                    child: AnimationLimiter(
-                      child: ListView.builder(
-                        padding: const EdgeInsets.only(top: 0, bottom: 0),
-                        physics: const BouncingScrollPhysics(),
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 3,
-                        itemBuilder: (context, index) {
-                          return OtherCityCard(
-                            isEnd: false,
-                            index: index + 3,
-                          );
-                        },
-                      ),
-                    ),
-                  ),
+                  value1.isSuccess
+                      ? Container(
+                          height: 220,
+                          color: Colors.transparent,
+                          child: AnimationLimiter(
+                            child: ListView.builder(
+                              padding: const EdgeInsets.only(top: 0, bottom: 0),
+                              physics: const BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: value1.cities.length,
+                              itemBuilder: (context, index) {
+                                return OtherCityCard(
+                                  isEnd: index + 1 == value1.cities.length,
+                                  index: index + 3,
+                                  locationName: value1.cities[index].name,
+                                  icon: value1.cities[index].data != null ? value1.cities[index].data!['weather'][0]['icon'] : '01d',
+                                  desc: value1.cities[index].data != null ? value1.cities[index].data!['weather'][0]['description'] : '--',
+                                  humidt: value1.cities[index].data != null ? value1.cities[index].data!['main']['humidity'] : 00,
+                                  temp: value1.cities[index].data != null ? value1.cities[index].data!['main']['temp'] : 00,
+                                  wind: value1.cities[index].data != null ? value1.cities[index].data!['wind']['speed'] : 00,
+                                );
+                              },
+                            ),
+                          ),
+                        )
+                      : Container(
+                          margin: const EdgeInsets.only(top: 20, bottom: 20),
+                          padding: const EdgeInsets.all(15),
+                          height: 265,
+                          width: double.infinity,
+                          child: const LoadingIndicator(),
+                        ),
                 ],
               ),
             );
@@ -148,9 +163,11 @@ class HomeScreen extends StatelessWidget {
   onRefresh(context) {
     RefreshLimit refreshLimit = Provider.of<RefreshLimit>(context, listen: false);
     MainCardProvider mainCardProvider = Provider.of<MainCardProvider>(context, listen: false);
+    CitiesProvider citiesProvider = Provider.of<CitiesProvider>(context, listen: false);
     if (refreshLimit.onLimit) {
       refreshLimit.setCount();
       mainCardProvider.loadData();
+      citiesProvider.loadData();
     } else {
       refreshLimitDialog(context: context);
     }
@@ -159,7 +176,9 @@ class HomeScreen extends StatelessWidget {
   initState(BuildContext context) {
     Future.delayed(const Duration(milliseconds: 1), () {
       MainCardProvider mainCardProvider = Provider.of<MainCardProvider>(context, listen: false);
+      CitiesProvider citiesProvider = Provider.of<CitiesProvider>(context, listen: false);
       if (!mainCardProvider.isSuccess) mainCardProvider.loadData();
+      if (!citiesProvider.isSuccess) citiesProvider.loadData();
     });
   }
 }
