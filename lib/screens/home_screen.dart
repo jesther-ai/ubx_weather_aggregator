@@ -6,6 +6,7 @@ import 'package:ubx_weather_aggregator/provider/refresh_limit.dart';
 import 'package:ubx_weather_aggregator/utilities/hex_color.dart';
 import 'package:ubx_weather_aggregator/widgets/dialog.dart';
 import 'package:ubx_weather_aggregator/widgets/input_textfield.dart';
+import 'package:ubx_weather_aggregator/widgets/loading_indicator.dart';
 import 'package:ubx_weather_aggregator/widgets/location_card.dart';
 import 'package:ubx_weather_aggregator/widgets/main_card.dart';
 import 'package:ubx_weather_aggregator/widgets/other_city_card.dart';
@@ -87,16 +88,24 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const AnimationConfiguration.staggeredList(
-                    position: 2,
-                    duration: Duration(milliseconds: 1000),
-                    child: FadeInAnimation(
-                      child: SlideAnimation(
-                        verticalOffset: 100,
-                        child: MainCard(),
-                      ),
-                    ),
-                  ),
+                  value.isSuccessMainCard
+                      ? const AnimationConfiguration.staggeredList(
+                          position: 2,
+                          duration: Duration(milliseconds: 1000),
+                          child: FadeInAnimation(
+                            child: SlideAnimation(
+                              verticalOffset: 100,
+                              child: MainCard(),
+                            ),
+                          ),
+                        )
+                      : Container(
+                          margin: const EdgeInsets.only(top: 20, bottom: 20),
+                          padding: const EdgeInsets.all(15),
+                          height: 265,
+                          width: double.infinity,
+                          child: const LoadingIndicator(),
+                        ),
                   const AnimationConfiguration.staggeredList(
                     position: 3,
                     duration: Duration(milliseconds: 1000),
@@ -137,7 +146,7 @@ class HomeScreen extends StatelessWidget {
     HomeProvider homeProvider = Provider.of<HomeProvider>(context, listen: false);
     if (refreshLimit.onLimit) {
       refreshLimit.setCount();
-      homeProvider.loadData();
+      homeProvider.loadDataMainCard();
     } else {
       refreshLimitDialog(context: context);
     }
@@ -146,7 +155,7 @@ class HomeScreen extends StatelessWidget {
   initState(BuildContext context) {
     Future.delayed(const Duration(milliseconds: 1), () {
       HomeProvider homeProvider = Provider.of<HomeProvider>(context, listen: false);
-      if (!homeProvider.isSuccess) homeProvider.loadData();
+      if (!homeProvider.isSuccessMainCard) homeProvider.loadDataMainCard();
     });
   }
 }

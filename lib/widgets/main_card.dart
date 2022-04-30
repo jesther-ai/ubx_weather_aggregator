@@ -24,7 +24,7 @@ class MainCard extends StatelessWidget {
         color: HexColor('#f46f20'),
         borderRadius: BorderRadius.circular(12.0),
       ),
-      // height: 300,
+      height: 265,
       width: double.infinity,
       child: Column(
         children: [
