@@ -58,6 +58,13 @@ class InputTextField extends StatelessWidget {
       height: height,
       width: width == null ? double.infinity : width!,
       decoration: BoxDecoration(
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black38,
+            blurRadius: 2,
+            offset: Offset(2, 3), // Shadow position
+          ),
+        ],
         color: HexColor('#F9FAFB'),
         borderRadius: BorderRadius.circular(borderRadius == null ? 12.0 : borderRadius!),
       ),

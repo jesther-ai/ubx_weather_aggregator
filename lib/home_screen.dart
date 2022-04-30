@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ubx_weather_aggregator/utilities/hex_color.dart';
 import 'package:ubx_weather_aggregator/widgets/input_textfield.dart';
+import 'package:ubx_weather_aggregator/widgets/location_card.dart';
 import 'package:ubx_weather_aggregator/widgets/main_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -56,6 +57,8 @@ class HomeScreen extends StatelessWidget {
               ),
               onChanged: (string) {},
             ),
+            const SizedBox(height: 20),
+            const LocationCard(location: 'Macabebe Pampanga'),
             const MainCard(),
           ],
         ),
