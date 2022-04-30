@@ -18,6 +18,7 @@ class HomeScreen extends StatelessWidget {
   final TextEditingController searchField = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    initState(context);
     return Scaffold(
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
@@ -40,7 +41,7 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-          child: Consumer<HomeProvider>(builder: (context, value, child) {
+          child: Consumer<MainCardProvider>(builder: (context, value, child) {
             return RefreshIndicator(
               color: Colors.white,
               backgroundColor: HexColor('#f46f20'),
@@ -88,7 +89,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  value.isSuccessMainCard
+                  value.isSuccess
                       ? const AnimationConfiguration.staggeredList(
                           position: 2,
                           duration: Duration(milliseconds: 1000),
@@ -112,7 +113,7 @@ class HomeScreen extends StatelessWidget {
                     child: FadeInAnimation(
                       child: SlideAnimation(
                         verticalOffset: 100,
-                        child: LocationCard(location: 'Other City', withLocation: false),
+                        child: LocationCard(location: 'Popular City', withLocation: false),
                       ),
                     ),
                   ),
@@ -125,9 +126,12 @@ class HomeScreen extends StatelessWidget {
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
-                        itemCount: value.cities.length,
+                        itemCount: 3,
                         itemBuilder: (context, index) {
-                          return OtherCityCard(index: index + 3);
+                          return OtherCityCard(
+                            isEnd: false,
+                            index: index + 3,
+                          );
                         },
                       ),
                     ),
@@ -143,10 +147,10 @@ class HomeScreen extends StatelessWidget {
 
   onRefresh(context) {
     RefreshLimit refreshLimit = Provider.of<RefreshLimit>(context, listen: false);
-    HomeProvider homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    MainCardProvider mainCardProvider = Provider.of<MainCardProvider>(context, listen: false);
     if (refreshLimit.onLimit) {
       refreshLimit.setCount();
-      homeProvider.loadDataMainCard();
+      mainCardProvider.loadData();
     } else {
       refreshLimitDialog(context: context);
     }
@@ -154,8 +158,8 @@ class HomeScreen extends StatelessWidget {
 
   initState(BuildContext context) {
     Future.delayed(const Duration(milliseconds: 1), () {
-      HomeProvider homeProvider = Provider.of<HomeProvider>(context, listen: false);
-      if (!homeProvider.isSuccessMainCard) homeProvider.loadDataMainCard();
+      MainCardProvider mainCardProvider = Provider.of<MainCardProvider>(context, listen: false);
+      if (!mainCardProvider.isSuccess) mainCardProvider.loadData();
     });
   }
 }

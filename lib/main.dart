@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider<RefreshLimit>(create: (context) => RefreshLimit()),
-          ChangeNotifierProvider<HomeProvider>(create: (context) => HomeProvider()),
+          ChangeNotifierProvider<MainCardProvider>(create: (context) => MainCardProvider()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

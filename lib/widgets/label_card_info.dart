@@ -4,10 +4,12 @@ class LabelCardInfo extends StatelessWidget {
   const LabelCardInfo({
     required this.label,
     required this.value,
+    this.unit,
     Key? key,
   }) : super(key: key);
   final String label;
-  final String value;
+  final num value;
+  final String? unit;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,12 +31,12 @@ class LabelCardInfo extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Text(
-            value,
+            value.toStringAsFixed(1) + (unit ?? ''),
             style: const TextStyle(
               fontFamily: 'Roboto',
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w800,
               fontStyle: FontStyle.normal,
-              fontSize: 22,
+              fontSize: 20,
               color: Colors.white,
             ),
           )

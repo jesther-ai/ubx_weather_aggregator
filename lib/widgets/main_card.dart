@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ubx_weather_aggregator/provider/main_card_provider.dart';
 import 'package:ubx_weather_aggregator/utilities/hex_color.dart';
 import 'package:ubx_weather_aggregator/widgets/clouds_section.dart';
 import 'package:ubx_weather_aggregator/widgets/label_card_info.dart';
@@ -26,42 +28,45 @@ class MainCard extends StatelessWidget {
       ),
       height: 265,
       width: double.infinity,
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              TemparatureSign(temp: '18°C'),
-              SizedBox(width: 10),
-              Clouds(code: '04d', description: 'Broken Clouds'),
-            ],
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              LabelCardInfo(label: 'Min Temp', value: '18°C'),
-              LabelCardInfo(label: 'Max Temp', value: '34°C'),
-              LabelCardInfo(label: 'Feels', value: '34°C'),
-              LabelCardInfo(label: 'Pressure', value: '1008'),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              LabelCardInfo(label: 'Wind Speed', value: '3.6km'),
-              LabelCardInfo(label: 'Wind Deg', value: '130°'),
-              LabelCardInfo(label: 'Humidt', value: '62%'),
-              LabelCardInfo(label: 'Visibility', value: '10000'),
-            ],
-          ),
-          const SizedBox(height: 10),
-          const UpdatedSince(epoch: 1651305121),
-        ],
-      ),
+      child: Consumer<MainCardProvider>(builder: (context, value, child) {
+        return Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TemparatureSign(temp: value.data['main']['temp']),
+                const SizedBox(width: 5),
+                Clouds(code: value.data['weather'][0]['icon'], description: value.data['weather'][0]['main']),
+              ],
+            ),
+            const SizedBox(height: 15),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                LabelCardInfo(label: 'Min Temp', value: value.data['main']['temp_min'], unit: '°C'),
+                LabelCardInfo(label: 'Max Temp', value: value.data['main']['temp_max'], unit: '°C'),
+                LabelCardInfo(label: 'Feels', value: value.data['main']['feels_like'], unit: '°C'),
+                LabelCardInfo(label: 'Pressure', value: value.data['main']['pressure']),
+              ],
+            ),
+            const SizedBox(height: 15),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                LabelCardInfo(label: 'Wind Speed', value: value.data['wind']['speed'], unit: 'km'),
+                LabelCardInfo(label: 'Wind Deg', value: value.data['wind']['deg'], unit: '°'),
+                LabelCardInfo(label: 'Wind Gust', value: value.data['wind']['gust']),
+                LabelCardInfo(label: 'Humidt', value: value.data['main']['humidity'], unit: '%'),
+              ],
+            ),
+            const SizedBox(height: 15),
+            UpdatedSince(epoch: value.data['dt']),
+          ],
+        );
+      }),
     );
   }
 }

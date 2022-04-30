@@ -5,16 +5,16 @@ class TemparatureSign extends StatelessWidget {
     required this.temp,
     Key? key,
   }) : super(key: key);
-  final String temp;
+  final double temp;
   @override
   Widget build(BuildContext context) {
     return Text(
-      temp,
+      temp.toStringAsFixed(1) + '°C',
       style: const TextStyle(
         fontFamily: 'Roboto',
         fontWeight: FontWeight.w700,
         fontStyle: FontStyle.normal,
-        fontSize: 85,
+        fontSize: 60,
         color: Colors.white,
       ),
     );
