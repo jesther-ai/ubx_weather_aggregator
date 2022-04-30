@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:ubx_weather_aggregator/utilities/hex_color.dart';
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: HexColor('#f46f20'),
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(title),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
       ),
       body: Center(
         child: Column(
@@ -24,11 +28,6 @@ class MyHomePage extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
