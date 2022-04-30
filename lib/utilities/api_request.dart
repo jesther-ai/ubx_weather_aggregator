@@ -7,12 +7,11 @@ import 'package:http/http.dart' as http;
 // enum RequestType { post, get }
 
 class API {
-  Future<Map<String, dynamic>> request({Map<String, dynamic>? parameter, required String query}) async {
+  Future<Map<String, dynamic>> request({Map<String, dynamic>? parameter, required String endPoint, required String query}) async {
     debugPrint('API REQUEST: $parameter');
     Map<String, String>? headers = <String, String>{
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
       'appid': AppConfig.key,
+      'units': 'metric',
       'q': query,
     };
     http.Response response;
@@ -21,13 +20,12 @@ class API {
 
       response = await http
           .get(
-            Uri.http(AppConfig.host, AppConfig.path, parameter),
-            headers: headers,
+            Uri.http(AppConfig.host, AppConfig.path + endPoint, headers),
           )
           .timeout(const Duration(seconds: 10));
 
       //============================================================
-      if (response.statusCode == 200 && response.body.isNotEmpty) {
+      if (response.body.isNotEmpty) {
         debugPrint('API RESPONSE (${(response.contentLength.toString())} Bytes): ${(response.body.toString())}');
         Map<String, dynamic> data = jsonDecode(response.body);
 
