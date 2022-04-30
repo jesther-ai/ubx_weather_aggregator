@@ -3,6 +3,7 @@ import 'package:ubx_weather_aggregator/utilities/hex_color.dart';
 import 'package:ubx_weather_aggregator/widgets/clouds_section.dart';
 import 'package:ubx_weather_aggregator/widgets/label_card_info.dart';
 import 'package:ubx_weather_aggregator/widgets/temperature_card.dart';
+import 'package:ubx_weather_aggregator/widgets/updated_since_info.dart';
 
 class MainCard extends StatelessWidget {
   const MainCard({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class MainCard extends StatelessWidget {
             offset: Offset(2, 3), // Shadow position
           ),
         ],
-        color: HexColor('#ffdbc2'),
+        color: HexColor('#f46f20'),
         borderRadius: BorderRadius.circular(12.0),
       ),
       // height: 300,
@@ -57,6 +58,8 @@ class MainCard extends StatelessWidget {
               LabelCardInfo(label: 'Visibility', value: '10000'),
             ],
           ),
+          const SizedBox(height: 10),
+          const UpdatedSince(epoch: 1651305121),
         ],
       ),
     );

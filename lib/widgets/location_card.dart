@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ubx_weather_aggregator/utilities/hex_color.dart';
 
 class LocationCard extends StatelessWidget {
   const LocationCard({
@@ -15,16 +16,16 @@ class LocationCard extends StatelessWidget {
       children: [
         Text(
           location,
-          style: const TextStyle(
+          style: TextStyle(
             fontFamily: 'Roboto',
             fontWeight: FontWeight.w500,
             fontStyle: FontStyle.normal,
             fontSize: 25,
-            color: Colors.white,
+            color: HexColor('#f46f20'),
           ),
         ),
         const SizedBox(width: 5),
-        withLocation ? const Icon(Icons.location_on_outlined, color: Colors.white) : const SizedBox()
+        withLocation ? Icon(Icons.location_on_outlined, color: HexColor('#f46f20')) : const SizedBox()
       ],
     );
   }

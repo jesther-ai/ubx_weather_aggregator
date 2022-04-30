@@ -15,7 +15,7 @@ class TemparatureSign extends StatelessWidget {
         fontWeight: FontWeight.w700,
         fontStyle: FontStyle.normal,
         fontSize: 85,
-        color: Colors.black,
+        color: Colors.white,
       ),
     );
   }

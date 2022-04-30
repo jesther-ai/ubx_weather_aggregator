@@ -24,7 +24,7 @@ class LabelCardInfo extends StatelessWidget {
               fontWeight: FontWeight.w500,
               fontStyle: FontStyle.normal,
               fontSize: 14,
-              color: Colors.black54,
+              color: Colors.white54,
             ),
           ),
           const SizedBox(height: 5),
@@ -35,7 +35,7 @@ class LabelCardInfo extends StatelessWidget {
               fontWeight: FontWeight.w700,
               fontStyle: FontStyle.normal,
               fontSize: 22,
-              color: Colors.black,
+              color: Colors.white,
             ),
           )
         ],

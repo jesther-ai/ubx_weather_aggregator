@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ubx_weather_aggregator/utilities/dismiss_keyboard.dart';
 
-import 'home_screen.dart';
+import 'screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,13 +11,15 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'UBX Weather Aggregator',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return DismissKeyboard(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'UBX Weather Aggregator',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: HomeScreen(),
       ),
-      home: HomeScreen(),
     );
   }
 }
