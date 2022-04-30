@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return DismissKeyboard(
       child: MultiProvider(
         providers: [
-          ChangeNotifierProvider<MainCard>(create: (context) => MainCard()),
+          ChangeNotifierProvider<HomeProvider>(create: (context) => HomeProvider()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
