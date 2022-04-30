@@ -12,7 +12,7 @@ class UpdatedSince extends StatelessWidget {
       'Last Update: ${DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(epoch * 1000)).inMinutes.toString()} minutes ago',
       style: const TextStyle(
         fontFamily: 'Roboto',
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w500,
         fontStyle: FontStyle.normal,
         fontSize: 11,
         color: Colors.white,

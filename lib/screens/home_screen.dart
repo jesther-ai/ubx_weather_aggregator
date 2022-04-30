@@ -120,7 +120,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   value1.isSuccess
                       ? Container(
-                          height: 220,
+                          height: 235,
                           color: Colors.transparent,
                           child: AnimationLimiter(
                             child: ListView.builder(
@@ -139,6 +139,7 @@ class HomeScreen extends StatelessWidget {
                                   humidt: value1.cities[index].data != null ? value1.cities[index].data!['main']['humidity'] : 00,
                                   temp: value1.cities[index].data != null ? value1.cities[index].data!['main']['temp'] : 00,
                                   wind: value1.cities[index].data != null ? value1.cities[index].data!['wind']['speed'] : 00,
+                                  epoch: value1.cities[index].data != null ? value1.cities[index].data!['dt'] : 00,
                                 );
                               },
                             ),
@@ -147,7 +148,7 @@ class HomeScreen extends StatelessWidget {
                       : Container(
                           margin: const EdgeInsets.only(top: 20, bottom: 20),
                           padding: const EdgeInsets.all(15),
-                          height: 265,
+                          height: 235,
                           width: double.infinity,
                           child: const LoadingIndicator(),
                         ),

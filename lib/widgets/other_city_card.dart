@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:ubx_weather_aggregator/utilities/hex_color.dart';
 import 'package:ubx_weather_aggregator/widgets/label_card_info.dart';
+import 'package:ubx_weather_aggregator/widgets/updated_since_info.dart';
 
 class OtherCityCard extends StatelessWidget {
   const OtherCityCard({
@@ -13,6 +14,7 @@ class OtherCityCard extends StatelessWidget {
     required this.temp,
     required this.humidt,
     required this.wind,
+    required this.epoch,
     Key? key,
   }) : super(key: key);
   final int index;
@@ -23,6 +25,7 @@ class OtherCityCard extends StatelessWidget {
   final num temp;
   final num humidt;
   final num wind;
+  final int epoch;
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +111,7 @@ class OtherCityCard extends StatelessWidget {
                     )
                   ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -117,6 +120,8 @@ class OtherCityCard extends StatelessWidget {
                     LabelCardInfo(label: 'Wind Speed', value: wind, unit: 'km'),
                   ],
                 ),
+                const SizedBox(height: 10),
+                UpdatedSince(epoch: epoch),
               ],
             ),
           ),
