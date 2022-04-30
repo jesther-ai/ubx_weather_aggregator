@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:ubx_weather_aggregator/utilities/hex_color.dart';
 import 'package:ubx_weather_aggregator/widgets/input_textfield.dart';
 import 'package:ubx_weather_aggregator/widgets/location_card.dart';
 import 'package:ubx_weather_aggregator/widgets/main_card.dart';
+import 'package:ubx_weather_aggregator/widgets/other_city_card.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({
@@ -60,24 +62,26 @@ class HomeScreen extends StatelessWidget {
               const LocationCard(location: 'Macabebe Pampanga', withLocation: true),
               const MainCard(),
               const LocationCard(location: 'Other City', withLocation: false),
-              const OtherCityCard(),
+              Container(
+                height: 230,
+                color: Colors.transparent,
+                child: AnimationLimiter(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.only(top: 0, bottom: 0),
+                    physics: const BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      return const OtherCityCard();
+                    },
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class OtherCityCard extends StatelessWidget {
-  const OtherCityCard({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 80,
-      height: 250,
-      color: Colors.red,
     );
   }
 }
