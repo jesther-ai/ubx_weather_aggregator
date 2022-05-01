@@ -5,11 +5,11 @@ class UpdatedSince extends StatelessWidget {
     required this.epoch,
     Key? key,
   }) : super(key: key);
-  final int epoch;
+  final int? epoch;
   @override
   Widget build(BuildContext context) {
     return Text(
-      'Last Update: ${DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(epoch * 1000)).inMinutes.toString()} minutes ago',
+      epoch != null ? 'Last Update: ${DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(epoch! * 1000)).inMinutes.toString()} minutes ago' : 'Last Update: -- minutes ago',
       style: const TextStyle(
         fontFamily: 'Roboto',
         fontWeight: FontWeight.w500,

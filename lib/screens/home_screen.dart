@@ -6,17 +6,18 @@ import 'package:ubx_weather_aggregator/provider/main_card_provider.dart';
 import 'package:ubx_weather_aggregator/provider/refresh_limit.dart';
 import 'package:ubx_weather_aggregator/utilities/hex_color.dart';
 import 'package:ubx_weather_aggregator/widgets/dialog.dart';
-import 'package:ubx_weather_aggregator/widgets/input_textfield.dart';
 import 'package:ubx_weather_aggregator/widgets/loading_indicator.dart';
 import 'package:ubx_weather_aggregator/widgets/location_card.dart';
 import 'package:ubx_weather_aggregator/widgets/main_card.dart';
 import 'package:ubx_weather_aggregator/widgets/other_city_card.dart';
+import 'package:ubx_weather_aggregator/widgets/search_card.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({
     Key? key,
   }) : super(key: key);
   final TextEditingController searchField = TextEditingController();
+  final FocusNode searchFocus = FocusNode();
   @override
   Widget build(BuildContext context) {
     initState(context);
@@ -41,52 +42,50 @@ class HomeScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
+          padding: const EdgeInsets.only(left: 20, right: 20),
           child: Consumer2<MainCardProvider, CitiesProvider>(builder: (context, value, value1, child) {
+            searchField.text = value.locationToSearch ?? '';
             return RefreshIndicator(
               color: Colors.white,
               backgroundColor: HexColor('#f46f20'),
               onRefresh: () => Future.delayed(const Duration(milliseconds: 100), () => onRefresh(context)),
               child: ListView(
                 children: [
+                  const SizedBox(height: 30),
                   AnimationConfiguration.staggeredList(
                     position: 0,
                     duration: const Duration(milliseconds: 1000),
                     child: FadeInAnimation(
                       child: SlideAnimation(
                         verticalOffset: 100,
-                        child: InputTextField(
+                        child: SearchCard(
+                          focus: searchFocus,
                           controller: searchField,
-                          hintText: 'Pampanga Philippines',
-                          height: 55,
-                          keyboardType: TextInputType.text,
-                          floatingLabelBehavior: FloatingLabelBehavior.never,
-                          padding: const EdgeInsets.only(left: 10, top: 5, bottom: 5),
-                          prefixIconPadding: const EdgeInsets.only(bottom: 20, right: 5),
-                          suffixIconPadding: const EdgeInsets.only(bottom: 20, right: 5),
-                          prefixIcon: IconButton(
-                            onPressed: () {},
-                            iconSize: 25,
-                            icon: Icon(Icons.location_on_outlined, color: HexColor('#f46f20')),
-                          ),
-                          suffixIcon: IconButton(
-                            onPressed: () {},
-                            iconSize: 25,
-                            icon: Icon(Icons.search, color: HexColor('#f46f20')),
-                          ),
-                          onChanged: (string) {},
+                          onChanged: (string) => value.setLocationToSearch(string),
+                          onTap: () {
+                            searchField.text = '';
+                            value.setLocationToSearch('');
+                          },
+                          onPressedSearch: () {
+                            value.loadDataByName();
+                            searchFocus.unfocus();
+                          },
+                          onPressedLocation: () {
+                            value.loadData();
+                            searchFocus.unfocus();
+                          },
                         ),
                       ),
                     ),
                   ),
                   const SizedBox(height: 20),
-                  const AnimationConfiguration.staggeredList(
+                  AnimationConfiguration.staggeredList(
                     position: 1,
-                    duration: Duration(milliseconds: 1000),
+                    duration: const Duration(milliseconds: 1000),
                     child: FadeInAnimation(
                       child: SlideAnimation(
                         verticalOffset: 100,
-                        child: LocationCard(location: 'Macabebe Pampanga', withLocation: true),
+                        child: value.isSuccess ? LocationCard(location: value.data['name'], withLocation: value.locationToSearch == null) : const LocationCard(location: 'Searching...', withLocation: false),
                       ),
                     ),
                   ),
@@ -114,7 +113,7 @@ class HomeScreen extends StatelessWidget {
                     child: FadeInAnimation(
                       child: SlideAnimation(
                         verticalOffset: 100,
-                        child: LocationCard(location: 'Popular City', withLocation: false),
+                        child: LocationCard(location: 'Popular Cities', withLocation: false),
                       ),
                     ),
                   ),
