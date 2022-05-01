@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:ubx_weather_aggregator/utilities/hex_color.dart';
 import 'package:ubx_weather_aggregator/widgets/app_bar_continer.dart';
+import 'package:ubx_weather_aggregator/widgets/info_card.dart';
 import 'package:ubx_weather_aggregator/widgets/sliver_app.dart';
 
 class DetailedScreen extends StatelessWidget {
@@ -75,8 +76,8 @@ class DetailedScreen extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           children: [
             WeatherTab(data: data),
-            const SizedBox(),
-            const SizedBox(),
+            WindTab(data: data),
+            OtherInfo(data: data),
           ],
         ),
       ),
@@ -114,89 +115,71 @@ class WeatherTab extends StatelessWidget {
           InfoCard(index: 4, iconData: Icons.water, label: 'Humidity', value: data['main']['humidity'].toString() + ' %'),
           InfoCard(index: 4, iconData: Icons.opacity, label: 'Sea Level', value: data['main']['sea_level'].toString() + ' m'),
           InfoCard(index: 4, iconData: Icons.landscape, label: 'Ground Level', value: data['main']['grnd_level'].toString() + ' m'),
+          InfoCard(index: 4, iconData: Icons.remove_red_eye_outlined, label: 'Visibility', value: data['visibility'].toString() + ' m'),
         ],
       ),
     );
   }
 }
 
-class InfoCard extends StatelessWidget {
-  const InfoCard({
-    required this.index,
-    this.iconData,
-    required this.label,
-    required this.value,
+class WindTab extends StatelessWidget {
+  const WindTab({
+    required this.data,
     Key? key,
   }) : super(key: key);
-  final int index;
-  final IconData? iconData;
-  final String label;
-  final String value;
-  final Duration duration = const Duration(milliseconds: 500);
+  final Map data;
   @override
   Widget build(BuildContext context) {
-    return AnimationConfiguration.staggeredGrid(
-      columnCount: 3,
-      position: index,
-      duration: duration,
-      child: ScaleAnimation(
-        duration: duration,
-        child: FadeInAnimation(
-          duration: duration,
-          child: FlipAnimation(
-            duration: duration,
-            child: Container(
-              width: 40,
-              height: 20,
-              margin: const EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black38,
-                    blurRadius: 2,
-                    offset: Offset(2, 3), // Shadow position
-                  ),
-                ],
-                color: HexColor('#f46f20'),
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-              padding: const EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
-              child: Row(
-                children: [
-                  Icon(iconData ?? Icons.sunny_snowing, color: Colors.white),
-                  const SizedBox(width: 15),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        label,
-                        style: const TextStyle(
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 12,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        value.contains('null ') ? '--' : value,
-                        style: const TextStyle(
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w600,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 22,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+    return Container(
+      color: Colors.transparent,
+      child: GridView(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          mainAxisExtent: 90, // here set custom Height You Want
         ),
+        padding: const EdgeInsets.only(top: 20, bottom: 0, left: 20, right: 20),
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        children: [
+          InfoCard(index: 0, iconData: Icons.air_sharp, label: 'Speed', value: data['wind']['speed'].toString() + ' mph'),
+          InfoCard(index: 1, iconData: Icons.directions, label: 'Degree', value: data['wind']['deg'].toString() + ' °'),
+          InfoCard(index: 2, iconData: Icons.air_outlined, label: 'Gust', value: data['wind']['gust'].toString() + ' mph'),
+        ],
+      ),
+    );
+  }
+}
+
+class OtherInfo extends StatelessWidget {
+  const OtherInfo({
+    required this.data,
+    Key? key,
+  }) : super(key: key);
+  final Map data;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.transparent,
+      child: GridView(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          mainAxisExtent: 90, // here set custom Height You Want
+        ),
+        padding: const EdgeInsets.only(top: 20, bottom: 0, left: 20, right: 20),
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        children: [
+          InfoCard(index: 0, iconData: Icons.rule_rounded, label: 'Latitude', value: data['coord']['lat'].toStringAsFixed(3) + ' °'),
+          InfoCard(index: 1, iconData: Icons.rule_rounded, label: 'Longitude', value: data['coord']['lon'].toStringAsFixed(3) + ' °'),
+          InfoCard(index: 2, iconData: Icons.timer, label: 'Timezone', value: data['timezone'].toString()),
+          InfoCard(index: 2, iconData: Icons.timer, label: 'Time Update', value: '${DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(data['dt'] * 1000)).inMinutes.toString()} min'),
+        ],
       ),
     );
   }
