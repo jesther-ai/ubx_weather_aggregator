@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:intl/intl.dart';
 import 'package:ubx_weather_aggregator/utilities/hex_color.dart';
 import 'package:ubx_weather_aggregator/widgets/label_card_info.dart';
 import 'package:ubx_weather_aggregator/widgets/updated_since_info.dart';
@@ -11,9 +12,9 @@ class AppbarContiner extends StatelessWidget {
     required this.locationName,
     required this.desc,
     required this.icon,
-    required this.temp,
-    required this.humidt,
-    required this.wind,
+    required this.sunSet,
+    required this.sunRise,
+    required this.country,
     required this.epoch,
     this.width,
     Key? key,
@@ -23,9 +24,9 @@ class AppbarContiner extends StatelessWidget {
   final String? locationName;
   final String desc;
   final String icon;
-  final num temp;
-  final num humidt;
-  final num wind;
+  final int sunSet;
+  final int sunRise;
+  final String country;
   final int epoch;
   final double? width;
   @override
@@ -71,9 +72,9 @@ class AppbarContiner extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    LabelCardInfo(label: 'Sun Set', value: temp, unit: '°C'),
-                    LabelCardInfo(label: 'Sun Rise', value: humidt, unit: '%'),
-                    LabelCardInfo(label: 'Country', value: wind),
+                    LabelCardInfoString(label: 'Sun Rise', value: DateFormat.jms().format(DateTime.fromMillisecondsSinceEpoch(sunRise * 1000))),
+                    LabelCardInfoString(label: 'Country', value: country),
+                    LabelCardInfoString(label: 'Sun Set', value: DateFormat.jms().format(DateTime.fromMillisecondsSinceEpoch(sunSet * 1000))),
                   ],
                 ),
                 const SizedBox(height: 20),

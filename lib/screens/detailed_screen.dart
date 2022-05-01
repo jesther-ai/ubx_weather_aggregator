@@ -9,21 +9,22 @@ class DetailedScreen extends StatelessWidget {
   static const routeName = '/detailedScreen';
   @override
   Widget build(BuildContext context) {
+    final Map data = ModalRoute.of(context)!.settings.arguments as Map;
     return UbxSliverAppBar(
       tabNumber: 3,
-      title: 'title here long',
+      title: 'Details',
       backgroundImage: 'assets/images/ubxLogo.png',
-      appBarContainer: const AppbarContiner(
+      appBarContainer: AppbarContiner(
         width: double.infinity,
         isEnd: true,
         index: 0,
-        locationName: 'locationkl',
+        locationName: data['name'],
         icon: '01d',
         desc: '--',
-        humidt: 00,
-        temp: 00,
-        wind: 00,
-        epoch: 00,
+        sunSet: data['sys']['sunset'],
+        sunRise: data['sys']['sunrise'],
+        country: data['sys']['country'],
+        epoch: data['dt'],
       ),
       bottom: AnimationConfiguration.staggeredList(
         position: 0,

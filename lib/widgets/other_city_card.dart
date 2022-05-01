@@ -16,6 +16,7 @@ class OtherCityCard extends StatelessWidget {
     required this.wind,
     required this.epoch,
     this.width,
+    required this.onTap,
     Key? key,
   }) : super(key: key);
   final int index;
@@ -28,6 +29,7 @@ class OtherCityCard extends StatelessWidget {
   final num wind;
   final int epoch;
   final double? width;
+  final Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return AnimationConfiguration.staggeredList(
@@ -36,98 +38,101 @@ class OtherCityCard extends StatelessWidget {
       child: FadeInAnimation(
         child: SlideAnimation(
           horizontalOffset: 200,
-          child: Container(
-            width: width ?? 300,
-            margin: EdgeInsets.only(top: 20, bottom: 20, right: isEnd ? 3 : 20),
-            padding: const EdgeInsets.all(15),
-            decoration: BoxDecoration(
-              boxShadow: width == null
-                  ? const [
-                      BoxShadow(
-                        color: Colors.black38,
-                        blurRadius: 2,
-                        offset: Offset(2, 3), // Shadow position
+          child: GestureDetector(
+            onTap: onTap,
+            child: Container(
+              width: width ?? 300,
+              margin: EdgeInsets.only(top: 20, bottom: 20, right: isEnd ? 3 : 20),
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                boxShadow: width == null
+                    ? const [
+                        BoxShadow(
+                          color: Colors.black38,
+                          blurRadius: 2,
+                          offset: Offset(2, 3), // Shadow position
+                        ),
+                      ]
+                    : [],
+                color: HexColor('#f46f20'),
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Column(
+                        children: [
+                          FadeInImage.assetNetwork(
+                            fadeInCurve: Curves.easeInQuart,
+                            fadeOutCurve: Curves.easeInQuart,
+                            fadeOutDuration: const Duration(milliseconds: 1000),
+                            fadeInDuration: const Duration(milliseconds: 200),
+                            fit: BoxFit.cover,
+                            placeholderFit: BoxFit.cover,
+                            placeholderCacheHeight: 20,
+                            placeholderCacheWidth: 20,
+                            height: 65,
+                            width: 70,
+                            placeholder: 'assets/images/loading.gif',
+                            image: 'https://openweathermap.org/img/wn/' + icon + '@2x.png',
+                          ),
+                          Text(
+                            desc.capitalized(),
+                            style: const TextStyle(
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.w600,
+                              fontStyle: FontStyle.normal,
+                              fontSize: 12,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
-                    ]
-                  : [],
-              color: HexColor('#f46f20'),
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Column(
-                      children: [
-                        FadeInImage.assetNetwork(
-                          fadeInCurve: Curves.easeInQuart,
-                          fadeOutCurve: Curves.easeInQuart,
-                          fadeOutDuration: const Duration(milliseconds: 1000),
-                          fadeInDuration: const Duration(milliseconds: 200),
-                          fit: BoxFit.cover,
-                          placeholderFit: BoxFit.cover,
-                          placeholderCacheHeight: 20,
-                          placeholderCacheWidth: 20,
-                          height: 65,
-                          width: 70,
-                          placeholder: 'assets/images/loading.gif',
-                          image: 'https://openweathermap.org/img/wn/' + icon + '@2x.png',
-                        ),
-                        Text(
-                          desc.capitalized(),
-                          style: const TextStyle(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w600,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 12,
-                            color: Colors.white,
+                      const SizedBox(width: 15),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Location',
+                            style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.w400,
+                              fontStyle: FontStyle.normal,
+                              fontSize: 12,
+                              color: Colors.white54,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(width: 15),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Location',
-                          style: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 12,
-                            color: Colors.white54,
+                          Text(
+                            locationName ?? 'null',
+                            style: const TextStyle(
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.w700,
+                              fontStyle: FontStyle.normal,
+                              fontSize: 22,
+                              color: Colors.white,
+                            ),
                           ),
-                        ),
-                        Text(
-                          locationName ?? 'null',
-                          style: const TextStyle(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.w700,
-                            fontStyle: FontStyle.normal,
-                            fontSize: 22,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                const SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    LabelCardInfo(label: 'Temp', value: temp, unit: '°C'),
-                    LabelCardInfo(label: 'Humidt', value: humidt, unit: '%'),
-                    LabelCardInfo(label: 'Wind Speed', value: wind, unit: 'km'),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                UpdatedSince(epoch: epoch),
-              ],
+                        ],
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      LabelCardInfo(label: 'Temp', value: temp, unit: '°C'),
+                      LabelCardInfo(label: 'Humidt', value: humidt, unit: '%'),
+                      LabelCardInfo(label: 'Wind Speed', value: wind, unit: 'km'),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  UpdatedSince(epoch: epoch),
+                ],
+              ),
             ),
           ),
         ),

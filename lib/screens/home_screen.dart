@@ -98,7 +98,7 @@ class HomeScreen extends StatelessWidget {
                             child: SlideAnimation(
                               verticalOffset: 100,
                               child: MainCard(
-                                onTap: () => Navigator.of(context).pushNamed(DetailedScreen.routeName),
+                                onTap: value.data['name'] != 'City not found...' ? () => Navigator.of(context).pushNamed(DetailedScreen.routeName, arguments: value.data) : () {},
                               ),
                             ),
                           ),
@@ -142,6 +142,7 @@ class HomeScreen extends StatelessWidget {
                                   temp: value1.cities[index].data != null ? value1.cities[index].data!['main']['temp'] : 00,
                                   wind: value1.cities[index].data != null ? value1.cities[index].data!['wind']['speed'] : 00,
                                   epoch: value1.cities[index].data != null ? value1.cities[index].data!['dt'] : 00,
+                                  onTap: () => Navigator.of(context).pushNamed(DetailedScreen.routeName, arguments: value1.cities[index].data),
                                 );
                               },
                             ),
