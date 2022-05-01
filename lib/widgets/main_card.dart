@@ -41,7 +41,7 @@ class MainCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TemparatureSign(temp: value.data['main'] != null ? value.data['main']['temp'] : 0),
-                  const SizedBox(width: 5),
+                  const SizedBox(width: 10),
                   Clouds(code: value.data['weather'] != null ? value.data['weather'][0]['icon'] : '01d', description: value.data['weather'] != null ? value.data['weather'][0]['description'] : '--'),
                 ],
               ),

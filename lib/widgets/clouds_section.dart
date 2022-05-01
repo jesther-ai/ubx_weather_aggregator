@@ -34,7 +34,7 @@ class Clouds extends StatelessWidget {
             fontFamily: 'Roboto',
             fontWeight: FontWeight.w600,
             fontStyle: FontStyle.normal,
-            fontSize: 15,
+            fontSize: 10,
             color: Colors.white,
           ),
         ),
