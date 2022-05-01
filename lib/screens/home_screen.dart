@@ -122,7 +122,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   value1.isSuccess
                       ? Container(
-                          height: 235,
+                          height: 240,
                           color: Colors.transparent,
                           child: AnimationLimiter(
                             child: ListView.builder(

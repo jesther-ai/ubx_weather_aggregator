@@ -60,8 +60,8 @@ class DetailedScreen extends StatelessWidget {
                 ),
                 isScrollable: true,
                 tabs: const [
-                  Text('WEATHER'),
-                  Text('WIND'),
+                  Text('WEATHER INFO'),
+                  Text('WIND INFO'),
                   Text('OTHER INFORMATION'),
                 ],
               ),

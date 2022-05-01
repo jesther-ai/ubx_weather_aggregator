@@ -42,6 +42,7 @@ class MainCardProvider with ChangeNotifier {
   loadData() async {
     reset();
     notifyListeners();
+    await Geolocator.requestPermission();
     Position? _result = await Geolocator.getLastKnownPosition();
     Map<String, String> parameter = {'appid': AppConfig.key, 'units': 'metric', 'lat': _result!.latitude.toString(), 'lon': _result.longitude.toString()};
     API().request(endPoint: '/weather', parameter: parameter).then((value) {
