@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:ubx_weather_aggregator/provider/cities_card_provider.dart';
 import 'package:ubx_weather_aggregator/provider/main_card_provider.dart';
 import 'package:ubx_weather_aggregator/provider/refresh_limit.dart';
+import 'package:ubx_weather_aggregator/screens/detailed_screen.dart';
 import 'package:ubx_weather_aggregator/utilities/hex_color.dart';
 import 'package:ubx_weather_aggregator/widgets/dialog.dart';
 import 'package:ubx_weather_aggregator/widgets/loading_indicator.dart';
@@ -90,13 +91,15 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   value.isSuccess
-                      ? const AnimationConfiguration.staggeredList(
+                      ? AnimationConfiguration.staggeredList(
                           position: 2,
-                          duration: Duration(milliseconds: 1000),
+                          duration: const Duration(milliseconds: 1000),
                           child: FadeInAnimation(
                             child: SlideAnimation(
                               verticalOffset: 100,
-                              child: MainCard(),
+                              child: MainCard(
+                                onTap: () => Navigator.of(context).pushNamed(DetailedScreen.routeName),
+                              ),
                             ),
                           ),
                         )

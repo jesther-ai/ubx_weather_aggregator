@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:ubx_weather_aggregator/provider/cities_card_provider.dart';
 import 'package:ubx_weather_aggregator/provider/main_card_provider.dart';
 import 'package:ubx_weather_aggregator/provider/refresh_limit.dart';
+import 'package:ubx_weather_aggregator/screens/detailed_screen.dart';
 import 'package:ubx_weather_aggregator/utilities/dismiss_keyboard.dart';
 
 import 'screens/home_screen.dart';
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
           ),
           home: HomeScreen(),
+          routes: {
+            DetailedScreen.routeName: (context) => const DetailedScreen(),
+          },
         ),
       ),
     );

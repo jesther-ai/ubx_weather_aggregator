@@ -30,7 +30,7 @@ class MainCardProvider with ChangeNotifier {
           _isSuccess = true;
           notifyListeners();
         } else {
-          _data['name'] = 'No city found...';
+          _data['name'] = 'City not found...';
           _isLoading = false;
           _isSuccess = true;
           notifyListeners();

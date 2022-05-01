@@ -15,6 +15,7 @@ class OtherCityCard extends StatelessWidget {
     required this.humidt,
     required this.wind,
     required this.epoch,
+    this.width,
     Key? key,
   }) : super(key: key);
   final int index;
@@ -26,7 +27,7 @@ class OtherCityCard extends StatelessWidget {
   final num humidt;
   final num wind;
   final int epoch;
-
+  final double? width;
   @override
   Widget build(BuildContext context) {
     return AnimationConfiguration.staggeredList(
@@ -36,21 +37,25 @@ class OtherCityCard extends StatelessWidget {
         child: SlideAnimation(
           horizontalOffset: 200,
           child: Container(
-            width: 300,
+            width: width ?? 300,
             margin: EdgeInsets.only(top: 20, bottom: 20, right: isEnd ? 3 : 20),
             padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black38,
-                  blurRadius: 2,
-                  offset: Offset(2, 3), // Shadow position
-                ),
-              ],
+              boxShadow: width == null
+                  ? const [
+                      BoxShadow(
+                        color: Colors.black38,
+                        blurRadius: 2,
+                        offset: Offset(2, 3), // Shadow position
+                      ),
+                    ]
+                  : [],
               color: HexColor('#f46f20'),
               borderRadius: BorderRadius.circular(12.0),
             ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
