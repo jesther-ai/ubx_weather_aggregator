@@ -1,6 +1,6 @@
 # ubx_weather_aggregator
 
-![alt text](APP/ubx_weather_aggregator/assets/images/readMe.jpg)
+![alt text](/assets/images/readMe.jpg)
 
 A new Flutter project.
 
