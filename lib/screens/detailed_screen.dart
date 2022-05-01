@@ -15,7 +15,7 @@ class DetailedScreen extends StatelessWidget {
       tabNumber: 3,
       title: 'Details',
       backgroundImage: 'assets/images/ubxLogo.png',
-      appBarContainer: AppbarContiner(
+      appBarContainer: AppBarContainer(
         width: double.infinity,
         isEnd: true,
         index: 0,

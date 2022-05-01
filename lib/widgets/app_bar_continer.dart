@@ -5,8 +5,8 @@ import 'package:ubx_weather_aggregator/utilities/hex_color.dart';
 import 'package:ubx_weather_aggregator/widgets/label_card_info.dart';
 import 'package:ubx_weather_aggregator/widgets/updated_since_info.dart';
 
-class AppbarContiner extends StatelessWidget {
-  const AppbarContiner({
+class AppBarContainer extends StatelessWidget {
+  const AppBarContainer({
     required this.index,
     required this.isEnd,
     required this.locationName,
